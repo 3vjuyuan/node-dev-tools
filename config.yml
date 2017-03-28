@@ -1,12 +1,12 @@
 sass:
-  src: src/sass
-  dest: joomla/media/site/css
+  src: src/style
+  dest: dist/css
 image:
   src: src/image
-  dest: joomla/media/site/images
+  dest: dist/images
 script:
   src: src/js
-  dest: joomla/media/site/js
+  dest: dist/js
   compiled: compiled
 
 
