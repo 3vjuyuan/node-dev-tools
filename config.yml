@@ -1,4 +1,5 @@
-sass:
+tasks: gulp-tasks
+style:
   src: src/style
   dest: dist/css
 image:

@@ -1,23 +1,17 @@
-const fs   = require('fs');
-const path = require('path');
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const browserify = require('browserify');
-const babelify = require('babelify');
-const es2015 = require('babel-preset-es2015');
-const react = require('babel-preset-react');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
-const yaml = require('js-yaml');
+import gulp from 'gulp';
+import babel from 'gulp-babel';
+import browserify from 'browserify';
+import babelify from 'babelify';
+import es2015 from 'babel-preset-es2015';
+import react from 'babel-preset-react';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
 
-js = () => {
-    try {
-        const config = yaml.load(
-            fs.readFileSync('config.yml', 'utf8')
-        );
-        //const jsSrc = config.script.src;
-        const jsDest = config.script.dest;
-        return browserify("main.js")
+module.exports = {
+    fn:function(gulp,configuration){
+        const jsSrc = configuration.script.src;
+        const jsDest = configuration.script.dest;
+        return browserify(jsSrc+"/index.js")
            .transform(babelify, {
               presets: ['es2015', 'react','stage-0']
            })
@@ -25,8 +19,5 @@ js = () => {
            .pipe(source('bundle.js'))
            .pipe(buffer())
            .pipe(gulp.dest(jsDest))
-    } catch (e) {
-        console.log(e);
     }
 }
-js();
