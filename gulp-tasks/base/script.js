@@ -1,5 +1,3 @@
-import gulp from 'gulp';
-import babel from 'gulp-babel';
 import browserify from 'browserify';
 import babelify from 'babelify';
 import es2015 from 'babel-preset-es2015';
@@ -18,6 +16,12 @@ module.exports = {
            .bundle()
            .pipe(source('bundle.js'))
            .pipe(buffer())
+           .pipe(jslint({
+               predef: [ 'a_global' ],
+               global: [ 'a_global' ]
+           }))
+           .pipe(modernizr())
+           .pipe(uglify())
            .pipe(gulp.dest(jsDest))
     }
 }

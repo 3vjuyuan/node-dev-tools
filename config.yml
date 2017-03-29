@@ -4,7 +4,7 @@ style:
   dest: dist/css
 image:
   src: src/image
-  dest: dist/images
+  dest: dist/image
 script:
   src: src/js
   dest: dist/js
