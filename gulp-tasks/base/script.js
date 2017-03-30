@@ -4,12 +4,12 @@ import es2015 from 'babel-preset-es2015';
 import react from 'babel-preset-react';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
+import jslint from 'gulp-jslint';
+import modernizr from 'gulp-modernizr';
 
 module.exports = {
     fn:function(gulp,configuration){
-        const jsSrc = configuration.script.src;
-        const jsDest = configuration.script.dest;
-        return browserify(jsSrc+"/index.js")
+        return browserify(configuration.script.src+"/index.js")
            .transform(babelify, {
               presets: ['es2015', 'react','stage-0']
            })
@@ -22,6 +22,6 @@ module.exports = {
            }))
            .pipe(modernizr())
            .pipe(uglify())
-           .pipe(gulp.dest(jsDest))
+           .pipe(gulp.dest(configuration.script.dest))
     }
 }
