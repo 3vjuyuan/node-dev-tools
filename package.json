@@ -28,7 +28,6 @@
     "gulp-babel": "^6.1.2",
     "gulp-modernizr": "^1.0.0-alpha",
     "gulp-require-tasks": "^1.0.5",
-    "gulp-yaml": "^1.0.1",
     "gulp-uglify": "^2.1.2",
     "js-yaml": "^3.8.2",
     "paths": "^0.1.1",
@@ -37,7 +36,6 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "jslint": "^0.10.3",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },

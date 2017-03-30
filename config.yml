@@ -9,5 +9,6 @@ script:
   src: src/js
   dest: dist/js
   compiled: compiled
+entry: /index.js
 
 
