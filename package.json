@@ -23,6 +23,7 @@
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^3.2.0",
     "gulp-require-tasks": "^1.0.5",
+    "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.5.1",
     "gulp-uglify": "^2.1.2",
     "gulp-util": "^3.0.8",
