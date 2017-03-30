@@ -1,14 +1,22 @@
-tasks: gulp-tasks
+tasks:
+  path: gulp-tasks/
+src:
+   path: src/
+dest:
+  path: dist/
 style:
-  src: src/style
-  dest: dist/css
+  path:
+    src: src/style/
+    dest: dist/css/
 image:
-  src: src/image
-  dest: dist/image
+  path:
+    src: src/image/
+    dest: dist/image/
 script:
-  src: src/js
-  dest: dist/js
-  compiled: compiled
-entry: /index.js
+  path:
+    src: src/js/
+    dest: dist/js/
+entry:
+  path: /index.js
 
 
