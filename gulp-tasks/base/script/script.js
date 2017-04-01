@@ -26,6 +26,6 @@ module.exports = {
             .pipe(uglify())
             .pipe(concat('/app.min.js', {prefix: 99}))
             .pipe(gulp.dest(configuration.script.path.dest))
-            .pipe(connect.onload());
+            .pipe(connect.reload());
     }
 }
