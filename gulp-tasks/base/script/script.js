@@ -10,7 +10,7 @@ import concat from 'gulp-concat';
 import uglify from 'gulp-uglify';
 
 module.exports = {
-    fn:function(gulp,configuration){
+    fn:function(gulp,configuration,connect){
         return browserify(configuration.script.path.src+configuration.entry.path)
             .transform(babelify, {
                 presets: ['es2015', 'react','stage-0']
@@ -26,5 +26,6 @@ module.exports = {
             .pipe(uglify())
             .pipe(concat('/app.min.js', {prefix: 99}))
             .pipe(gulp.dest(configuration.script.path.dest))
+            .pipe(connect.onload());
     }
 }
