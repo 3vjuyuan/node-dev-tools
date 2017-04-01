@@ -24,6 +24,7 @@
     "fs": "0.0.1-security",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-connect": "^5.0.0",
     "gulp-require-tasks": "^1.0.5",
     "gulp-uglify": "^2.1.2",
     "js-yaml": "^3.8.2",

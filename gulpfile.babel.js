@@ -1,6 +1,7 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
 import gulpRequireTasks from 'gulp-require-tasks';
+import connect from 'gulp-connect';
 
 let configuration  = yaml.load(
             fs.readFileSync('config.yml', 'utf8')
@@ -8,5 +9,5 @@ let configuration  = yaml.load(
 
 gulpRequireTasks({
     path: process.cwd()+"/"+configuration.tasks.path,
-    arguments: [configuration]
+    arguments: [configuration,connect]
 });
