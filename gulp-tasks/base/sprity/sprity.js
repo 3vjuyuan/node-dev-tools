@@ -3,9 +3,9 @@ import sprity from 'sprity';
 
 
 module.exports ={
-    fn:function (gulp,configration) {
+    fn:function (gulp,configuration) {
         return sprity.src({
-            src:configration.image.path.src+'/**/*.*',
+            src:configuration.image.path.src+'/**/*.*',
             style:'./icon.scss',
             format:'png',
             orientation :'binary-tree',
@@ -15,8 +15,8 @@ module.exports ={
             name:'icon',
         })
 
-            .pipe(gulpif('*.png', gulp.dest(configration.image.path.dest),
-                gulp.dest(configration.style.path.src+'/sprity')))
+            .pipe(gulpif('*.png', gulp.dest(configuration.image.path.dest),
+                gulp.dest(configuration.style.path.src+'/sprity')))
     }
 }
 
