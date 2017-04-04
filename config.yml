@@ -1,7 +1,7 @@
 tasks:
   path: gulp-tasks/
 src:
-   path: src/
+  path: src/
 dest:
   path: dist/
 style:
@@ -18,5 +18,3 @@ script:
     dest: dist/js/
 entry:
   path: /index.js
-
-
