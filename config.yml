@@ -11,6 +11,7 @@ style:
       css: src/raw/css
     compiled: compiled/css
     dest: dist/css/
+    vendors:
 image:
   path:
     src: src/raw/images/
