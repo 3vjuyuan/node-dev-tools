@@ -13,6 +13,14 @@ image:
   path:
     src: src/image/
     dest: dist/image/
+  sprity:
+    style: ./sprity.css
+    format: png
+    orientation: binary-tree
+    processor: css
+    engine: gm
+    name: sprity
+    prefix: sprity
 script:
   path:
     src: src/js/
