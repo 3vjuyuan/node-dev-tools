@@ -11,11 +11,11 @@ style:
       css: src/raw/css
     compiled: compiled/css
     dest: dist/css/
-    lint: ".sass-lint.yml"
+    lint: .sass-lint.yml
     vendors:
   autoprefix:
-    browser: "last 2 version"
-    env: "ie 10"
+    browser: last 2 version
+    env: ie 10
 image:
   path:
     src: src/raw/images/

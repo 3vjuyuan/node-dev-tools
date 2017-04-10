@@ -9,7 +9,7 @@ module.exports = {
             configuration.style.path.compiled + '/**/*.css',
             configuration.style.path.src.css + '/**/*.css',
         ])
-            .pipe(sourcemaps.init())
+            .pipe(sourceMaps.init())
             .pipe(cleanCSS())
             .pipe(concat('app.min.css'))
             .pipe(sourceMaps.write('./'))
