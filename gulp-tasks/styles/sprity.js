@@ -1,24 +1,26 @@
 import gulpif from 'gulp-if';
 import sprity from 'sprity';
+import svgSprite from 'gulp-svg-sprite';
+import plumber from 'gulp-plumber';
 
+module.exports = {
+    fn: function (gulp, configuration) {
+         gulp.src(configuration.image.path.src + '/**/*.svg')
+            .pipe(plumber())
+            .pipe(svgSprite(configuration.image.svgsprityconfig))
+            .on('error',function (error) {
+                console.log(error.toString());
+            })
+            .pipe(gulp.dest('.'))
 
-module.exports ={
-    fn:function (gulp,configuration) {
-        return sprity.src({
-            src:configuration.image.path.src+'/**/*.{png,jpg,gif,svg}',
-            style:configuration.image.sprity.style,
-            format:configuration.image.sprity.format,
-            orientation :configuration.image.sprity.orientation,
-            processor:configuration.image.sprity.processor,
-            engine:configuration.image.sprity.engine,
-            name:configuration.image.sprity.name,
-            prefix:configuration.image.sprity.prefix,
-        })
-            .on('error',function (err) {
+         sprity.src(configuration.image.sprity)
+            .on('error', function (err) {
                 console.log(err.toString());
             })
             .pipe(gulpif('*.png', gulp.dest(configuration.image.path.dest),
-                gulp.dest(configuration.style.path.compiled+'/sprity')))
+                gulp.dest(configuration.style.path.src.css)))
+        
+        return;
     }
 }
 

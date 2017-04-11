@@ -6,21 +6,36 @@ dest:
   path: dist/
 style:
   path:
-    src: src/style/
+    src:
+      sass: src/styles/
+      css: src/raw/css
     compiled: compiled/css
     dest: dist/css/
 image:
   path:
-    src: src/Raw/images/
+    src: src/raw/images/
     dest: dist/image/
   sprity:
-    style: src/style/sprity.css
+    src: src/raw/images/**/*.{png,jpg,gif}
+    style: src/style/sprity.scss
     format: png
     orientation: binary-tree
     processor: sass
     engine: gm
     name: sprity
     prefix: sprity
+  svgsprityconfig:
+    shape:
+      id:
+        separator: '-'
+    mode:
+      css:
+        dest: .
+        sprite: dist/image/svg-sprite.svg
+        prefix: .
+        render:
+          scss:
+            dest: src/raw/css/svg-sprity.scss
 script:
   path:
     src: src/js/
