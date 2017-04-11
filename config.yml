@@ -11,13 +11,13 @@ style:
     dest: dist/css/
 image:
   path:
-    src: src/image/
+    src: src/Raw/images/
     dest: dist/image/
   sprity:
-    style: ./sprity.css
+    style: src/style/sprity.css
     format: png
     orientation: binary-tree
-    processor: css
+    processor: sass
     engine: gm
     name: sprity
     prefix: sprity
