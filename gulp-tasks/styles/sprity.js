@@ -13,14 +13,13 @@ module.exports = {
             })
             .pipe(gulp.dest('.'))
 
-         sprity.src(configuration.image.sprity)
+        return sprity.src(configuration.image.sprity)
             .on('error', function (err) {
                 console.log(err.toString());
             })
             .pipe(gulpif('*.png', gulp.dest(configuration.image.path.dest),
                 gulp.dest(configuration.style.path.src.css)))
         
-        return;
     }
 }
 
