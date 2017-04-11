@@ -20,3 +20,6 @@ script:
     dest: dist/js/
 entry:
   path: /index.js
+
+build-tasks:
+  - "image:compress"
