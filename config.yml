@@ -19,7 +19,8 @@ script:
     compiled: compiled/js
     dest: dist/js/
 entry:
-  path: /index.js
-
-build-tasks:
+  path: index.js
+buildTask:
   - "image:compress"
+  - "script:concat"
+  - "styles:minify"
