@@ -24,6 +24,7 @@ image:
     engine: gm
     name: sprity
     prefix: sprity
+    dest: src/images/sprity-scss
   svgsprityconfig:
     shape:
       id:
@@ -35,7 +36,7 @@ image:
         prefix: .
         render:
           scss:
-            dest: src/raw/css/svg-sprity.scss
+            dest: src/images/sprity-scss/svg-sprity.scss
 script:
   path:
     src: src/js/
