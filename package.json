@@ -46,7 +46,7 @@
     "require-dir": "^0.3.1",
     "sprity": "^1.0.8",
     "sprity-gm": "^1.0.2",
-    "sprity-sass": "^1.0.4"
+    "sprity-sass": "^1.0.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
