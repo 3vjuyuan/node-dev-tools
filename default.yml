@@ -1,5 +1,9 @@
 tasks:
   path: gulp-tasks/
+  build:
+    - "image:compress"
+    - "scripts:compile"
+    - "styles:compile"
 src:
   path: src/
 dest:
@@ -50,7 +54,3 @@ script:
     dest: dist/Javascripts
     libs: []
   targetName: app.min.js
-buildTask:
-  - "image:compress"
-  - "script:concat"
-  - "styles:minify"
