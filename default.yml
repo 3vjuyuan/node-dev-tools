@@ -1,0 +1,56 @@
+tasks:
+  path: gulp-tasks/
+  build:
+    - "image:compress"
+    - "scripts:compile"
+    - "styles:compile"
+src:
+  path: src/
+dest:
+  path: dist/
+style:
+  path:
+    src:
+      sass: src/styles/
+      css: src/raw/css
+    compiled: compiled/css
+    dest: dist/css/
+    lint: .sass-lint.yml
+    vendors:
+  autoprefix:
+    browser: last 2 version
+    env: ie 10
+image:
+  path:
+    src: src/raw/images/
+    dest: dist/image/
+  sprity:
+    src: src/raw/images/**/*.{png,jpg,gif}
+    style: src/style/sprity.scss
+    format: png
+    orientation: binary-tree
+    processor: sass
+    engine: gm
+    name: sprity
+    prefix: sprity
+    dest: src/images/sprity-scss
+  svgsprityconfig:
+    shape:
+      id:
+        separator: '-'
+    mode:
+      css:
+        dest: .
+        sprite: dist/image/svg-sprite.svg
+        prefix: .
+        render:
+          scss:
+            dest: src/images/sprity-scss/svg-sprity.scss
+script:
+  path:
+    src: src/Javascripts
+    entryFile: index.js
+    compiled: compiled/Javascripts
+    dest: dist/Javascripts
+    libs: []
+  targetName: app.min.js
