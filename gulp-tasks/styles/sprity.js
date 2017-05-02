@@ -8,20 +8,23 @@
  * For more details:
  * https://www.3vjuyuan.com/licenses/mit.html
  *
- * @author Team fancy <fancy@3vjuyuan.com>
+ * @author Team Fancy <fancy@3vjuyuan.com>
  * @author Team Delta <delta@3vjuyuan.com>
  */
 
+'use strict';
+
 import concat from 'gulp-concat';
 import sourceMaps from 'gulp-sourcemaps';
+
 module.exports = {
-    dep:['styles:sprity-svg','styles:sprity-img'],
+    dep: ['styles:sprity-svg', 'styles:sprity-img'],
     fn: function (gulp, configuration) {
-      return gulp.src(configuration.image.sprity.dest + '/**/*.scss')
+        return gulp.src(configuration.image.sprity.dest + '/**/*.scss')
             .pipe(sourceMaps.init())
             .pipe(concat('sprity.scss'))
             .pipe(sourceMaps.write('./'))
-            .pipe(gulp.dest(configuration.style.path.src.sass+'/sprity'))
-        
+            .pipe(gulp.dest(configuration.style.path.src.sass + '/sprity'))
+
     }
 };

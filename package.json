@@ -46,6 +46,7 @@
     "postinstall": "npm run build",
     "default": "gulp default",
     "build": "gulp build",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "show-tasks": "gulp --tasks"
   }
 }
