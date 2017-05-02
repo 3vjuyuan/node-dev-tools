@@ -8,7 +8,7 @@
  * For more details:
  * https://www.3vjuyuan.com/licenses/mit.html
  *
- * @author Team fancy <fancy@3vjuyuan.com>
+ * @author Team Fancy <fancy@3vjuyuan.com>
  * @author Team Delta <delta@3vjuyuan.com>
  */
 
@@ -18,7 +18,7 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import gulpRequireTasks from 'gulp-require-tasks';
 import connect from 'gulp-connect';
-import merge from './scrpits/merge';
+import merge from './scripts/merge';
 
 let configuration = merge(
     yaml.load(fs.readFileSync('default.yml', 'utf8')),

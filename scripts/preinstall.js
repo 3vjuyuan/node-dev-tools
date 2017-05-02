@@ -8,9 +8,8 @@
  * For more details:
  * https://www.3vjuyuan.com/licenses/mit.html
  *
- * @author Team fancy <fancy@3vjuyuan.com>
+ * @author Team Fancy <fancy@3vjuyuan.com>
  * @author Team Delta <delta@3vjuyuan.com>
  */
 
-var installParameter = ' ?? Install Files ??';
-console.log('Pre install set the value: ' + installParameter);
+'use strict';

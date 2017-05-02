@@ -15,8 +15,8 @@ style:
       css: src/raw/css
     compiled: compiled/css
     dest: dist/css/
-    lint: .sass-lint.yml
-    vendors:
+    lint: ''
+    vendors: []
   autoprefix:
     browser: last 2 version
     env: ie 10
