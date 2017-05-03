@@ -17,7 +17,6 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
 import gulpRequireTasks from 'gulp-require-tasks';
-import connect from 'gulp-connect';
 import merge from './scripts/merge';
 
 let configuration = merge(
@@ -25,7 +24,10 @@ let configuration = merge(
     yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8')),
 );
 
-gulpRequireTasks({
-    path: process.cwd() + "/" + configuration.tasks.path,
-    arguments: [configuration, connect]
-});
+
+for (let i in configuration.tasks.path) {
+    gulpRequireTasks({
+        path: process.cwd() + "/" + configuration.tasks.path[i],
+        arguments: [configuration]
+    })
+}

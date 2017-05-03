@@ -19,7 +19,6 @@
     "gulp-cached": "^1.1.1",
     "gulp-clean-css": "^3.0.4",
     "gulp-concat": "^2.6.1",
-    "gulp-connect": "^5.0.0",
     "gulp-eslint": "^3.0.1",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^3.2.0",

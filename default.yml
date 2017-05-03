@@ -1,5 +1,6 @@
 tasks:
-  path: gulp-tasks/
+  path:
+    - gulp-tasks/
   build:
     - "image:compress"
     - "scripts:compile"
