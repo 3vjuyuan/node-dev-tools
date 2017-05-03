@@ -24,6 +24,10 @@ let configuration = merge(
     yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8')),
 );
 
+if(!Array.isArray(configuration.tasks.path)) {
+    console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "UserProject/config.yml".');
+    process.exit();
+}
 
 for (let i in configuration.tasks.path) {
     gulpRequireTasks({
