@@ -17,7 +17,6 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
 import gulpRequireTasks from 'gulp-require-tasks';
-import connect from 'gulp-connect';
 import merge from './scripts/merge';
 
 let configuration = merge(
@@ -25,7 +24,14 @@ let configuration = merge(
     yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8')),
 );
 
-gulpRequireTasks({
-    path: process.cwd() + "/" + configuration.tasks.path,
-    arguments: [configuration, connect]
-});
+if(!Array.isArray(configuration.tasks.path)) {
+    console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "UserProject/config.yml".');
+    process.exit();
+}
+
+for (let i in configuration.tasks.path) {
+    gulpRequireTasks({
+        path: process.cwd() + "/" + configuration.tasks.path[i],
+        arguments: [configuration]
+    })
+}
