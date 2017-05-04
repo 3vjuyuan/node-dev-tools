@@ -21,7 +21,9 @@ module.exports = {
     fn: function (gulp, configuration) {
         return gulp.src(configuration.script.path.src + '/**/*.js')
             .pipe(cached('esLint'))
-            .pipe(eslint())
+            .pipe(eslint({
+                configFile:configuration.script.lint
+            }))
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     }

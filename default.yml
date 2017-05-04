@@ -43,6 +43,7 @@ image:
           scss:
             dest: src/images/sprity-scss/svg-sprity.scss
 script:
+  lint: .eslintrc.yml
   path:
     src: src/Javascripts
     entryFile: index.js
