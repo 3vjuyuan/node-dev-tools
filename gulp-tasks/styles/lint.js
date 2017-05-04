@@ -22,8 +22,20 @@ module.exports = {
         return gulp.src(configuration.style.path.src.sass + '/**/*.{scss, sass}')
             .pipe(cached('sassLint'))
             .pipe(sassLint({
-                config: configuration.style.path.lint,
-                endless: true
+                rules:{
+                    'bem-depth':[{'max-depth':2}],
+                    'class-name-format':[{'allow-leading-underscore':false},{'convention':'hyphenatedbem'}],
+                    'mixins-before-declarations':[1,{'exclude':['tablet','desktop']}],
+                    'force-attribute-nesting':0,
+                    'force-element-nesting':0,
+                    'force-pseudo-nesting':0,
+                    'no-attribute-selectors':1,
+                    'no-ids':0,
+                    'no-qualifying-elements':0,
+                    'no-universal-selectors':1,
+                    'property-sort-order':[1,{'order':'concentric'}]
+                },
+                configFile: configuration.style.path.lint
             }))
             .pipe(sassLint.format())
             .pipe(sassLint.failOnError());
