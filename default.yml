@@ -13,6 +13,7 @@ style:
     compiled: compiled/css
     dest: dist/css/
     vendors: []
+  lint: ''
   autoprefix:
     browser: last 2 version
     env: ie 10

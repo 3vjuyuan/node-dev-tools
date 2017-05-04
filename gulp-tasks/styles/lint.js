@@ -35,7 +35,7 @@ module.exports = {
                     'no-universal-selectors':1,
                     'property-sort-order':[1,{'order':'concentric'}]
                 },
-                configFile: configuration.style.path.lint
+                configFile: configuration.style.lint
             }))
             .pipe(sassLint.format())
             .pipe(sassLint.failOnError());
