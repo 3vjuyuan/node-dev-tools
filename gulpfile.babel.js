@@ -23,6 +23,10 @@ import empty from './scripts/empty';
 process.trimPath = function (input) {
     return 'string' === typeof input ? input.replace(/^\/+|\/+$/g, '') : '';
 };
+let configuration = merge(
+    yaml.load(fs.readFileSync('default.yml', 'utf8')),
+    //yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8')),
+);
 
 process.getObjectType = function (obj) {
     return ({}).toString.call(obj).slice(8, -1).toLowerCase();

@@ -16,14 +16,25 @@
 
 import eslint from 'gulp-eslint';
 import cached from 'gulp-cached';
+import gulpif from 'gulp-if';
 
+function isObject(obj){
+    if(typeof(obj) === 'object'){
+        return true;
+    }else{
+        return false;
+    }
+}
 module.exports = {
     fn: function (gulp, configuration) {
         return gulp.src(configuration.script.path.src + '/**/*.js')
             .pipe(cached('esLint'))
-            .pipe(eslint({
-                configFile:configuration.script.lint
-            }))
+            .pipe(eslint(
+                gulpif(
+                !!(configuration.script.lint&&isObject(configuration.script.lint)),
+                configuration.script.lint?configuration.script.lint:{options:{}}
+                )
+            ))
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     }
