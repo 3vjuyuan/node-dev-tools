@@ -20,11 +20,8 @@ import gulpif from 'gulp-if';
 
 function isObject(obj){
     var s = Object.prototype.toString.call(obj);
-    if(type=='object'){
-        return true
-    }else{
-        return false
-    }
+    var type = s.match(/\[object (.*?)\]/)[1].toLowerCase();
+        return type == 'object';
 }
 module.exports = {
     fn: function (gulp, configuration) {
