@@ -16,27 +16,23 @@
 
 import cached from 'gulp-cached';
 import sassLint from 'gulp-sass-lint';
+import gulpif from 'gulp-if';
+
+function isObject(o) {
+    var s = Object.prototype.toString.call(o);
+    var type = s.match(/\[object (.*?)\]/)[1].toLowerCase();
+    if(type=='object'){
+        return true
+    }else{
+        return false
+    }
+}
 
 module.exports = {
     fn: function (gulp, configuration) {
         return gulp.src(configuration.style.path.src.sass + '/**/*.{scss, sass}')
             .pipe(cached('sassLint'))
-            .pipe(sassLint({
-                rules:{
-                    'bem-depth':[{'max-depth':2}],
-                    'class-name-format':[{'allow-leading-underscore':false},{'convention':'hyphenatedbem'}],
-                    'mixins-before-declarations':[1,{'exclude':['tablet','desktop']}],
-                    'force-attribute-nesting':0,
-                    'force-element-nesting':0,
-                    'force-pseudo-nesting':0,
-                    'no-attribute-selectors':1,
-                    'no-ids':0,
-                    'no-qualifying-elements':0,
-                    'no-universal-selectors':1,
-                    'property-sort-order':[1,{'order':'concentric'}]
-                },
-                configFile: configuration.style.lint
-            }))
+            .pipe(sassLint(gulpif(!!(configuration.style.lint&&isObject(configuration.style.lint)),configuration.style.lint?configuration.style.lint:{options:{}})))
             .pipe(sassLint.format())
             .pipe(sassLint.failOnError());
     }
