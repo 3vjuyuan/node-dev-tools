@@ -19,10 +19,11 @@ import cached from 'gulp-cached';
 import gulpif from 'gulp-if';
 
 function isObject(obj){
-    if(typeof(obj) === 'object'){
-        return true;
+    var s = Object.prototype.toString.call(obj);
+    if(type=='object'){
+        return true
     }else{
-        return false;
+        return false
     }
 }
 module.exports = {
