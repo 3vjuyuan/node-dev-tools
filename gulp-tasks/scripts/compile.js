@@ -20,14 +20,16 @@ import uglify from 'gulp-uglify';
 import cached from 'gulp-cached';
 import sourcemaps from 'gulp-sourcemaps';
 import babel from 'gulp-babel';
-import es from 'event-stream';
+import streamqueue from 'streamqueue';
 
 module.exports = {
     dep: ['scripts:lint'],
     fn: function (gulp, configuration) {
-        return es.merge(
+        return streamqueue(
+            {objectMode: true},
             gulp.src(configuration.script.path.libs),
-            gulp.src(configuration.script.path.src + '/**/*.js')
+            gulp.src(configuration.script.path.src + '/**/*.js'
+            )
                 .pipe(cached('compileJs'))
                 .pipe(sourcemaps.init())
                 .pipe(babel())

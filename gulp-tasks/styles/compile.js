@@ -20,8 +20,8 @@ import gulputil from 'gulp-util';
 import prefix from 'gulp-autoprefixer';
 import gulpif from 'gulp-if';
 import concat from 'gulp-concat';
-import es from 'event-stream';
 import minify from 'gulp-clean-css';
+import streamqueue from 'streamqueue';
 
 module.exports = {
     dep: ['styles:lint'],
@@ -42,7 +42,11 @@ module.exports = {
             ));
 
         configuration.onlyCSS = false;
-        return es.merge(sassCompiler, gulp.src(configuration.style.path.src.css + '/**/*.css'))
+        return streamqueue(
+            {objectMode: true},
+            sassCompiler,
+            gulp.src(configuration.style.path.src.css + '/**/*.css')
+        )
             .pipe(minify())
             .pipe(prefix({
                 browsers: [configuration.style.autoprefix.browser],
