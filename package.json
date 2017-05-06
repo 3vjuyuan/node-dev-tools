@@ -40,9 +40,10 @@
     "sprity-sass": "^1.0.4",
     "streamqueue": "^1.1.1"
   },
+  "devDependencies": {
+    "through2": "^2.0.3"
+  },
   "scripts": {
-    "install": "npm install UserProject",
-    "postinstall": "npm run build",
     "default": "gulp default",
     "build": "gulp build",
     "watch": "gulp watch",
