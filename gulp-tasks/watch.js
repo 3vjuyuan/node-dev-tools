@@ -25,4 +25,4 @@ module.exports = {
             configuration.onlyCSS = event.path.split('.').pop() == 'css';
         });
     }
-}
+};

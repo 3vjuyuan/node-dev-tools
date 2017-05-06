@@ -25,6 +25,6 @@ module.exports = {
             .on('error', function (error) {
                 console.log(error.toString());
             })
-            .pipe(gulp.dest('.'))
+            .pipe(gulp.dest('.'));
     }
 };

@@ -18,4 +18,4 @@ module.exports = {
     fn: function (gulp, configuration) {
         gulp.start.apply(gulp, configuration.tasks.build);
     }
-}
+};

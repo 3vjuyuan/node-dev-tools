@@ -27,6 +27,6 @@ module.exports = {
         ])
             .pipe(modernizr())
             .pipe(uglify({preserveComments: 'some'}))
-            .pipe(gulp.dest(configuration.script.path.dest))
+            .pipe(gulp.dest(configuration.script.path.dest));
     }
 };

@@ -23,6 +23,6 @@ module.exports = {
             .pipe(cached('esLint'))
             .pipe(eslint())
             .pipe(eslint.format())
-            .pipe(eslint.failAfterError())
+            .pipe(eslint.failAfterError());
     }
 };

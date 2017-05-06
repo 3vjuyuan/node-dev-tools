@@ -21,7 +21,7 @@ import merge from './scripts/merge';
 
 let configuration = merge(
     yaml.load(fs.readFileSync('default.yml', 'utf8')),
-    yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8')),
+    yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8'))
 );
 
 if(!Array.isArray(configuration.tasks.path)) {
@@ -33,5 +33,5 @@ for (let i in configuration.tasks.path) {
     gulpRequireTasks({
         path: process.cwd() + "/" + configuration.tasks.path[i],
         arguments: [configuration]
-    })
+    });
 }

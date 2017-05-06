@@ -29,7 +29,7 @@ module.exports = {
                     imageminSvg({plugins: [{removeViewBox: false}]})
                 ]).on('error', gulpUtil.log)
             )
-            .pipe(gulp.dest(configuration.image.path.dest))
+            .pipe(gulp.dest(configuration.image.path.dest));
     }
 };
 

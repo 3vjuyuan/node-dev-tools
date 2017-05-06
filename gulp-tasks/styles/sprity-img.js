@@ -31,14 +31,14 @@ module.exports = {
                     stat = fs.lstatSync(pathname);
                 if (!stat.isDirectory()) {
                     if (extArr.indexOf(pathname.substr(pathname.length - 3)) != -1) {
-                        filesArr.push(pathname)
+                        filesArr.push(pathname);
                         return true;
                     }
                 } else {
                     getAllFiles(pathname);
                 }
             }
-        })(dir)
+        })(dir);
 
         if (filesArr.length > 0) {
             return sprity.src(configuration.image.sprity)
@@ -46,16 +46,16 @@ module.exports = {
                     console.log(err.toString());
                 })
                 .pipe(gulpif('*.png', gulp.dest(configuration.image.path.dest),
-                    gulp.dest(configuration.image.sprity.dest)))
+                    gulp.dest(configuration.image.sprity.dest)));
         } else {
             if (mkdirsSync(configuration.image.sprity.dest, '0o777')) {
                 fs.writeFile(configuration.image.sprity.dest + '/sprity.scss', '', function (err) {
                     if (err) {
                         return console.log(err);
                     }
-                })
+                });
                 return gulp.src(configuration.image.sprity.dest + '/sprity.scss')
-                    .pipe(gulp.dest(configuration.image.sprity.dest))
+                    .pipe(gulp.dest(configuration.image.sprity.dest));
             }
 
         }
