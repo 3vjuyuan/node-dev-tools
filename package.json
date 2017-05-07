@@ -42,11 +42,5 @@
   },
   "devDependencies": {
     "through2": "^2.0.3"
-  },
-  "scripts": {
-    "default": "gulp default",
-    "build": "gulp build",
-    "watch": "gulp watch",
-    "show-tasks": "gulp --tasks"
   }
 }

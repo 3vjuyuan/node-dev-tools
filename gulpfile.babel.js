@@ -18,20 +18,37 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import gulpRequireTasks from 'gulp-require-tasks';
 import merge from './scripts/merge';
+import empty from './scripts/empty';
 
-let configuration = merge(
-    yaml.load(fs.readFileSync('default.yml', 'utf8')),
-    yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8'))
-);
+process.trimPath = function (input) {
+    return 'string' === typeof input ? input.replace(/^\/+|\/+$/g, '') : '';
+};
 
-if(!Array.isArray(configuration.tasks.path)) {
+let currentPath = process.cwd() + '/',
+    projectPath = process.env.PWD + '/' + (process.env.npm_package_project_path == undefined ? '' : process.trimPath(process.env.npm_package_project_path)),
+    configuration = merge(
+        yaml.load(fs.readFileSync(currentPath + 'default.yml', 'utf8')),
+        fs.existsSync(projectPath + 'project.yml') ? yaml.load(fs.readFileSync(currentPath + 'project.yml', 'utf8')) : {}
+    );
+
+if (!Array.isArray(configuration.tasks.path)) {
     console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "UserProject/config.yml".');
     process.exit();
 }
 
+if(empty(configuration.style.path.lint)) {
+    configuration.style.path.lint = currentPath + '.sass-lint.yml';
+}
+
+if(empty(configuration.style.path.lint)) {
+    configuration.style.path.lint = currentPath + '.sass-lint.yml';
+}
+
+process.chdir(projectPath);
+
 for (let i in configuration.tasks.path) {
     gulpRequireTasks({
-        path: process.cwd() + "/" + configuration.tasks.path[i],
+        path: currentPath + configuration.tasks.path[i],
         arguments: [configuration]
     });
 }
