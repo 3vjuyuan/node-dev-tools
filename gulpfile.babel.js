@@ -29,12 +29,13 @@ process.getObjectType = function (obj) {
 };
 
 let currentPath = process.cwd() + '/',
-    projectPath = process.env.PWD + '/' + (empty(process.env.npm_package_project_path) ? '' : process.trimPath(process.env.npm_package_project_path)),
+    projectPath = process.env.PWD + (empty(process.env.npm_package_project_path) ? '/' : '/' + process.trimPath(process.env.npm_package_project_path) + '/'),
     configuration = merge(
         yaml.load(fs.readFileSync(currentPath + 'default.yml', 'utf8')),
         fs.existsSync(projectPath + 'project.yml') ? yaml.load(fs.readFileSync(projectPath + 'project.yml', 'utf8')) : {}
     ),
-    lint;
+    lint,
+    lintFilePath = '';
 
 if (!Array.isArray(configuration.tasks.path)) {
     console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "UserProject/config.yml".');
@@ -43,7 +44,11 @@ if (!Array.isArray(configuration.tasks.path)) {
 
 if (empty(lint = configuration.styles.lint) || process.getObjectType(lint) !== 'object') {
     lint = {configFile: currentPath + '.sass-lint.yml'};
-} else if (empty(lint.configFile)) {
+} else if(
+    fs.existsSync(lintFilePath = projectPath + process.trimPath(lint.configFile)) ||
+    fs.existsSync(lintFilePath = process.env.PWD + '/' + process.trimPath(lint.configFile))){
+    lint.configFile = lintFilePath;
+} else {
     lint.configFile = currentPath + '.sass-lint.yml';
 }
 
