@@ -33,19 +33,22 @@ let currentPath = process.cwd() + '/',
     configuration = merge(
         yaml.load(fs.readFileSync(currentPath + 'default.yml', 'utf8')),
         fs.existsSync(projectPath + 'project.yml') ? yaml.load(fs.readFileSync(projectPath + 'project.yml', 'utf8')) : {}
-    );
+    ),
+    lint;
 
 if (!Array.isArray(configuration.tasks.path)) {
     console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "UserProject/config.yml".');
     process.exit();
 }
 
-if(empty(configuration.style.path.lint)) {
-    configuration.style.path.lint = currentPath + '.sass-lint.yml';
+if (empty(lint = configuration.styles.lint) || process.getObjectType(lint) !== 'object') {
+    lint = {configFile: currentPath + '.sass-lint.yml'};
+} else if (empty(lint.configFile)) {
+    lint.configFile = currentPath + '.sass-lint.yml';
 }
 
-if(empty(configuration.style.path.lint)) {
-    configuration.style.path.lint = currentPath + '.sass-lint.yml';
+if (empty(lint = configuration.script.lint)) {
+    lint = {path: currentPath + '.eslintrc.yml'};
 }
 
 process.chdir(projectPath);

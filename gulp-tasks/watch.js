@@ -19,7 +19,7 @@ module.exports = {
     fn: function (gulp, configuration) {
         gulp.watch(configuration.script.path.src + '/**/*.js', ['script:mdernizr']);
         gulp.watch(
-            [configuration.style.path.src.sass + '/**/*.{scss, sass}', configuration.style.path.src.css + '/**/*.css'],
+            [configuration.styles.path.src.sass + '/**/*.{scss, sass}', configuration.styles.path.src.css + '/**/*.css'],
             ['styles:compile']
         ).on('change', function (event) {
             configuration.onlyCSS = event.path.split('.').pop() == 'css';

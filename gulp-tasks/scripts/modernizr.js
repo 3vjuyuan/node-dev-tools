@@ -21,8 +21,8 @@ module.exports = {
     dep: ['scripts:compile'],
     fn: function (gulp, configuration) {
         return gulp.src([
-            configuration.style.path.src.css + '/**/*.css',
-            configuration.style.path.src.sass + '/**/*.{scss, sass}',
+            configuration.styles.path.src.css + '/**/*.css',
+            configuration.styles.path.src.sass + '/**/*.{scss, sass}',
             configuration.script.path.src + '/**/*.js'
         ])
             .pipe(modernizr())

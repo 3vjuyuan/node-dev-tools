@@ -16,23 +16,12 @@
 
 import cached from 'gulp-cached';
 import sassLint from 'gulp-sass-lint';
-import gulpif from 'gulp-if';
-
-function isObject(o) {
-    var s = Object.prototype.toString.call(o);
-    var type = s.match(/\[object (.*?)\]/)[1].toLowerCase();
-    if(type=='object'){
-        return true
-    }else{
-        return false
-    }
-}
 
 module.exports = {
     fn: function (gulp, configuration) {
-        return gulp.src(configuration.style.path.src.sass + '/**/*.{scss, sass}')
+        return gulp.src(configuration.styles.path.src.sass + '/**/*.{scss, sass}')
             .pipe(cached('sassLint'))
-            .pipe(sassLint(gulpif(!!(configuration.style.lint&&isObject(configuration.style.lint)),configuration.style.lint?configuration.style.lint:{options:{}})))
+            .pipe(sassLint(configuration.styles.lint))
             .pipe(sassLint.format())
             .pipe(sassLint.failOnError());
     }
