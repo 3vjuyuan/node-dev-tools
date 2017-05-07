@@ -24,11 +24,15 @@ process.trimPath = function (input) {
     return 'string' === typeof input ? input.replace(/^\/+|\/+$/g, '') : '';
 };
 
+process.getObjectType = function (obj) {
+    return ({}).toString.call(obj).slice(8, -1).toLowerCase();
+};
+
 let currentPath = process.cwd() + '/',
-    projectPath = process.env.PWD + '/' + (process.env.npm_package_project_path == undefined ? '' : process.trimPath(process.env.npm_package_project_path)),
+    projectPath = process.env.PWD + '/' + (empty(process.env.npm_package_project_path) ? '' : process.trimPath(process.env.npm_package_project_path)),
     configuration = merge(
         yaml.load(fs.readFileSync(currentPath + 'default.yml', 'utf8')),
-        fs.existsSync(projectPath + 'project.yml') ? yaml.load(fs.readFileSync(currentPath + 'project.yml', 'utf8')) : {}
+        fs.existsSync(projectPath + 'project.yml') ? yaml.load(fs.readFileSync(projectPath + 'project.yml', 'utf8')) : {}
     );
 
 if (!Array.isArray(configuration.tasks.path)) {
