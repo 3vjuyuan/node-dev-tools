@@ -69,6 +69,10 @@ module.exports = function () {
         let result = clone(obj1);
         for (let key in obj2) {
             let value = obj2[key];
+            if ((result[key] !== undefined || result[key] !== null) && 'object' !== typeof result[key]) {
+                result[key] = value;
+            }
+
             switch (typeOf(value)) {
                 case 'array':
                     result[key] = mergeArrays(result[key], obj2[key]);

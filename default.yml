@@ -5,7 +5,7 @@ tasks:
     - "image:compress"
     - "scripts:compile"
     - "styles:compile"
-style:
+styles:
   path:
     src:
       sass: src/styles/

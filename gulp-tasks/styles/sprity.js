@@ -24,7 +24,7 @@ module.exports = {
             .pipe(sourceMaps.init())
             .pipe(concat('sprity.scss'))
             .pipe(sourceMaps.write('./'))
-            .pipe(gulp.dest(configuration.style.path.src.sass + '/sprity'));
+            .pipe(gulp.dest(configuration.styles.path.src.sass + '/sprity'));
 
     }
 };
