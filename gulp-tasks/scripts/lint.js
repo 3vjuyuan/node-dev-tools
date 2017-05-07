@@ -16,23 +16,12 @@
 
 import eslint from 'gulp-eslint';
 import cached from 'gulp-cached';
-import gulpif from 'gulp-if';
 
-function isObject(obj){
-    var s = Object.prototype.toString.call(obj);
-    var type = s.match(/\[object (.*?)\]/)[1].toLowerCase();
-        return type == 'object';
-}
 module.exports = {
     fn: function (gulp, configuration) {
-        return gulp.src(configuration.script.path.src + '/**/*.js')
+        return gulp.src(configuration.scripts.path.src + '/**/*.js')
             .pipe(cached('esLint'))
-            .pipe(eslint(
-                gulpif(
-                !!(configuration.script.lint&&isObject(configuration.script.lint)),
-                configuration.script.lint?configuration.script.lint:{options:{}}
-                )
-            ))
+            .pipe(eslint(configuration.scripts.lint))
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     }

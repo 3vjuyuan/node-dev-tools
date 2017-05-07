@@ -23,10 +23,10 @@ module.exports = {
         return gulp.src([
             configuration.styles.path.src.css + '/**/*.css',
             configuration.styles.path.src.sass + '/**/*.{scss, sass}',
-            configuration.script.path.src + '/**/*.js'
+            configuration.scripts.path.src + '/**/*.js'
         ])
             .pipe(modernizr())
             .pipe(uglify({preserveComments: 'some'}))
-            .pipe(gulp.dest(configuration.script.path.dest));
+            .pipe(gulp.dest(configuration.scripts.path.dest));
     }
 };

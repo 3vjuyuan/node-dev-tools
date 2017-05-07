@@ -17,7 +17,7 @@
 module.exports = {
     dep: ['build'],
     fn: function (gulp, configuration) {
-        gulp.watch(configuration.script.path.src + '/**/*.js', ['script:mdernizr']);
+        gulp.watch(configuration.scripts.path.src + '/**/*.js', ['script:mdernizr']);
         gulp.watch(
             [configuration.styles.path.src.sass + '/**/*.{scss, sass}', configuration.styles.path.src.css + '/**/*.css'],
             ['styles:compile']

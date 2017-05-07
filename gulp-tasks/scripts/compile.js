@@ -27,12 +27,12 @@ module.exports = {
     fn: function (gulp, configuration) {
         return streamqueue(
             {objectMode: true},
-            gulp.src(configuration.script.path.libs),
-            gulp.src(configuration.script.path.src + '/**/*.js'
+            gulp.src(configuration.scripts.path.libs),
+            gulp.src(configuration.scripts.path.src + '/**/*.js'
             )
                 .pipe(cached('compileJs'))
                 .pipe(sourcemaps.init())
-                .pipe(babel())
+                .pipe(babel(configuration.scripts.babel))
                 .on("error", function (error) {
                     gutil.log(
                         gutil.colors.red("Javascript compile error:"),
@@ -41,8 +41,8 @@ module.exports = {
                 })
         )
             .pipe(uglify({preserveComments: 'some'}))
-            .pipe(concat('/' + configuration.script.targetName, {prefix: 99}))
+            .pipe(concat('/' + configuration.scripts.targetName, {prefix: 99}))
             .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest(configuration.script.path.dest));
+            .pipe(gulp.dest(configuration.scripts.path.dest));
     }
 };
