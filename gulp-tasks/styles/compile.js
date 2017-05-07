@@ -26,34 +26,34 @@ import streamqueue from 'streamqueue';
 module.exports = {
     dep: ['styles:lint'],
     fn: function (gulp, configuration) {
-        let sassCompiler = gulp.src(configuration.style.path.src.sass + '/**/*.{scss, sass}')
+        let sassCompiler = gulp.src(configuration.styles.path.src.sass + '/**/*.{scss, sass}')
             .pipe(sourcemaps.init())
             .pipe(gulpif(
                 configuration.onlyCSS !== true,
                 sass({
                     outputStyle: 'compressed',
-                    includePaths: configuration.style.path.vendors
+                    includePaths: configuration.styles.path.vendors
                 }).on('error', gulputil.log)
             ))
             .pipe(gulpif(
                 configuration.onlyCSS !== true,
-                gulp.dest(configuration.style.path.compiled),
-                gulp.src(configuration.style.path.compiled + '/**/*.css')
+                gulp.dest(configuration.styles.path.compiled),
+                gulp.src(configuration.styles.path.compiled + '/**/*.css')
             ));
 
         configuration.onlyCSS = false;
         return streamqueue(
             {objectMode: true},
             sassCompiler,
-            gulp.src(configuration.style.path.src.css + '/**/*.css')
+            gulp.src(configuration.styles.path.src.css + '/**/*.css')
         )
             .pipe(minify())
             .pipe(prefix({
-                browsers: [configuration.style.autoprefix.browser],
-                env: configuration.style.autoprefix.env
+                browsers: [configuration.styles.autoprefix.browser],
+                env: configuration.styles.autoprefix.env
             }))
             .pipe(concat('app.min.css'))
             .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest(configuration.style.path.dest));
+            .pipe(gulp.dest(configuration.styles.path.dest));
     }
 };

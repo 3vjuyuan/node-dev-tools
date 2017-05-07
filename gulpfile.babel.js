@@ -18,20 +18,61 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import gulpRequireTasks from 'gulp-require-tasks';
 import merge from './scripts/merge';
+import empty from './scripts/empty';
 
-let configuration = merge(
-    yaml.load(fs.readFileSync('default.yml', 'utf8')),
-    yaml.load(fs.readFileSync('UserProject/config.yml', 'utf8')),
-);
+process.trimPath = function (input) {
+    return 'string' === typeof input ? input.replace(/^\/+|\/+$/g, '') : '';
+};
 
-if(!Array.isArray(configuration.tasks.path)) {
+process.getObjectType = function (obj) {
+    return ({}).toString.call(obj).slice(8, -1).toLowerCase();
+};
+
+let currentPath = process.cwd() + '/',
+    projectPath = process.env.PWD + (empty(process.env.npm_package_project_path) ? '/' : '/' + process.trimPath(process.env.npm_package_project_path) + '/'),
+    configuration = merge(
+        yaml.load(fs.readFileSync(currentPath + 'default.yml', 'utf8')),
+        fs.existsSync(projectPath + 'project.yml') ? yaml.load(fs.readFileSync(projectPath + 'project.yml', 'utf8')) : {}
+    ),
+    lint,
+    lintFilePath = '';
+
+if (!Array.isArray(configuration.tasks.path)) {
     console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "UserProject/config.yml".');
     process.exit();
 }
 
+if (empty(lint = configuration.styles.lint) || process.getObjectType(lint) !== 'object') {
+    configuration.styles.lint = {configFile: currentPath + '.sass-lint.yml'};
+} else if(
+    fs.existsSync(lintFilePath = projectPath + process.trimPath(lint.configFile)) ||
+    fs.existsSync(lintFilePath = process.env.PWD + '/' + process.trimPath(lint.configFile))){
+    lint.configFile = lintFilePath;
+} else {
+    lint.configFile = currentPath + '.sass-lint.yml';
+}
+
+if (empty(lint = configuration.scripts.lint) || process.getObjectType(lint) !== 'object') {
+    configuration.scripts.lint = {configFile: currentPath + '.eslintrc'};
+} else if(
+    fs.existsSync(lintFilePath = projectPath + process.trimPath(lint.configFile)) ||
+    fs.existsSync(lintFilePath = process.env.PWD + '/' + process.trimPath(lint.configFile))){
+    lint.configFile = lintFilePath;
+} else {
+    lint.configFile = currentPath + '.eslintrc';
+}
+
+if ((empty(configuration.scripts.babel) || process.getObjectType(configuration.scripts.babel) !== 'object') &&
+    !fs.existsSync(projectPath + '.babelrc') &&
+    !fs.existsSync(process.env.PWD + '/' + '.babelrc')) {
+    configuration.scripts.babel = {extends: currentPath + '.babelrc'};
+}
+
+process.chdir(projectPath);
+
 for (let i in configuration.tasks.path) {
     gulpRequireTasks({
-        path: process.cwd() + "/" + configuration.tasks.path[i],
+        path: currentPath + configuration.tasks.path[i],
         arguments: [configuration]
-    })
+    });
 }
