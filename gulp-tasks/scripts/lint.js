@@ -19,9 +19,9 @@ import cached from 'gulp-cached';
 
 module.exports = {
     fn: function (gulp, configuration) {
-        return gulp.src(configuration.script.path.src + '/**/*.js')
+        return gulp.src(configuration.scripts.path.src + '/**/*.js')
             .pipe(cached('esLint'))
-            .pipe(eslint())
+            .pipe(eslint(configuration.scripts.lint))
             .pipe(eslint.format())
             .pipe(eslint.failAfterError());
     }

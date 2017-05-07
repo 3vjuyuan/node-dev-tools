@@ -43,7 +43,7 @@ if (!Array.isArray(configuration.tasks.path)) {
 }
 
 if (empty(lint = configuration.styles.lint) || process.getObjectType(lint) !== 'object') {
-    lint = {configFile: currentPath + '.sass-lint.yml'};
+    configuration.styles.lint = {configFile: currentPath + '.sass-lint.yml'};
 } else if(
     fs.existsSync(lintFilePath = projectPath + process.trimPath(lint.configFile)) ||
     fs.existsSync(lintFilePath = process.env.PWD + '/' + process.trimPath(lint.configFile))){
@@ -52,8 +52,20 @@ if (empty(lint = configuration.styles.lint) || process.getObjectType(lint) !== '
     lint.configFile = currentPath + '.sass-lint.yml';
 }
 
-if (empty(lint = configuration.script.lint)) {
-    lint = {path: currentPath + '.eslintrc.yml'};
+if (empty(lint = configuration.scripts.lint) || process.getObjectType(lint) !== 'object') {
+    configuration.scripts.lint = {configFile: currentPath + '.eslintrc'};
+} else if(
+    fs.existsSync(lintFilePath = projectPath + process.trimPath(lint.configFile)) ||
+    fs.existsSync(lintFilePath = process.env.PWD + '/' + process.trimPath(lint.configFile))){
+    lint.configFile = lintFilePath;
+} else {
+    lint.configFile = currentPath + '.eslintrc';
+}
+
+if ((empty(configuration.scripts.babel) || process.getObjectType(configuration.scripts.babel) !== 'object') &&
+    !fs.existsSync(projectPath + '.babelrc') &&
+    !fs.existsSync(process.env.PWD + '/' + '.babelrc')) {
+    configuration.scripts.babel = {extends: currentPath + '.babelrc'};
 }
 
 process.chdir(projectPath);
