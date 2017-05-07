@@ -19,7 +19,7 @@ import sassLint from 'gulp-sass-lint';
 
 module.exports = {
     fn: function (gulp, configuration) {
-        return gulp.src(configuration.style.path.src + '/**/*.scss')
+        return gulp.src(configuration.style.path.src.sass + '/**/*.{scss, sass}')
             .pipe(cached('sassLint'))
             .pipe(sassLint({
                 config: configuration.style.path.lint,
