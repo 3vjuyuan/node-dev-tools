@@ -28,51 +28,56 @@ process.getObjectType = function (obj) {
     return ({}).toString.call(obj).slice(8, -1).toLowerCase();
 };
 
-let currentPath = process.cwd() + '/',
+let thisToolsPath = process.cwd() + '/',
     projectPath = process.env.PWD + (empty(process.env.npm_package_project_path) ? '/' : '/' + process.trimPath(process.env.npm_package_project_path) + '/'),
     configuration = merge(
-        yaml.load(fs.readFileSync(currentPath + 'default.yml', 'utf8')),
+        yaml.load(fs.readFileSync(thisToolsPath + 'default.yml', 'utf8')),
         fs.existsSync(projectPath + 'project.yml') ? yaml.load(fs.readFileSync(projectPath + 'project.yml', 'utf8')) : {}
     ),
     lint,
     lintFilePath = '';
 
-if (!Array.isArray(configuration.tasks.path)) {
-    console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "UserProject/config.yml".');
+if (!Array.isArray(configuration.tasks.path) || configuration.tasks.path.length === 0) {
+    console.error("\x1b[31m", '\nThe default tasks configuration is lost. The path must be an array.\nPlease Check you configuration file in "' + projectPath + 'project.yml".');
     process.exit();
 }
 
 if (empty(lint = configuration.styles.lint) || process.getObjectType(lint) !== 'object') {
-    configuration.styles.lint = {configFile: currentPath + '.sass-lint.yml'};
+    configuration.styles.lint = {configFile: thisToolsPath + '.sass-lint.yml'};
 } else if(
     fs.existsSync(lintFilePath = projectPath + process.trimPath(lint.configFile)) ||
     fs.existsSync(lintFilePath = process.env.PWD + '/' + process.trimPath(lint.configFile))){
     lint.configFile = lintFilePath;
 } else {
-    lint.configFile = currentPath + '.sass-lint.yml';
+    lint.configFile = thisToolsPath + '.sass-lint.yml';
 }
 
 if (empty(lint = configuration.scripts.lint) || process.getObjectType(lint) !== 'object') {
-    configuration.scripts.lint = {configFile: currentPath + '.eslintrc'};
+    configuration.scripts.lint = {configFile: thisToolsPath + '.eslintrc'};
 } else if(
     fs.existsSync(lintFilePath = projectPath + process.trimPath(lint.configFile)) ||
     fs.existsSync(lintFilePath = process.env.PWD + '/' + process.trimPath(lint.configFile))){
     lint.configFile = lintFilePath;
 } else {
-    lint.configFile = currentPath + '.eslintrc';
+    lint.configFile = thisToolsPath + '.eslintrc';
 }
 
 if ((empty(configuration.scripts.babel) || process.getObjectType(configuration.scripts.babel) !== 'object') &&
     !fs.existsSync(projectPath + '.babelrc') &&
     !fs.existsSync(process.env.PWD + '/' + '.babelrc')) {
-    configuration.scripts.babel = {extends: currentPath + '.babelrc'};
+    configuration.scripts.babel = {extends: thisToolsPath + '.babelrc'};
 }
 
 process.chdir(projectPath);
 
-for (let i in configuration.tasks.path) {
+gulpRequireTasks({
+    path: thisToolsPath + configuration.tasks.path[0],
+    arguments: [configuration]
+});
+
+for (let i = 1; i < configuration.tasks.path.length; i++) {
     gulpRequireTasks({
-        path: currentPath + configuration.tasks.path[i],
+        path: projectPath + configuration.tasks.path[i],
         arguments: [configuration]
     });
 }
