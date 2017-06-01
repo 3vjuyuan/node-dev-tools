@@ -37,6 +37,7 @@
     "imagemin-optipng": "^5.2.1",
     "imagemin-svgo": "^5.2.1",
     "js-yaml": "^3.8.2",
+    "lodash": "^4.17.4",
     "sprity": "^1.0.8",
     "sprity-gm": "^1.0.2",
     "sprity-sass": "^1.0.4",
