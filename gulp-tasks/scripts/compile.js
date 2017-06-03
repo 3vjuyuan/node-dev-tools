@@ -21,15 +21,31 @@ import cached from 'gulp-cached';
 import sourcemaps from 'gulp-sourcemaps';
 import babel from 'gulp-babel';
 import streamqueue from 'streamqueue';
+import browserify from 'browserify';
+import babelify from 'babelify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
 
 module.exports = {
     dep: ['scripts:lint'],
     fn: function (gulp, configuration) {
-        return streamqueue(
-            {objectMode: true},
-            gulp.src(configuration.scripts.path.libs),
-            gulp.src(configuration.scripts.path.src + '/**/*.js'
-            )
+        let compiled = configuration.scripts.isModule ?
+            browserify({
+                entries: configuration.scripts.path.src + '/' + configuration.scripts.path.entries,
+                debug: true
+            })
+                .transform(babelify)
+                .bundle()
+                .on("error", function (err) {
+                    gutil.log(
+                        gutil.colors.red("Browserify compile error:"),
+                        err.message
+                    );
+                })
+                .pipe(source('Site.js'))
+                .pipe(buffer())
+                .pipe(sourcemaps.init({loadMaps: true})) :
+            gulp.src(configuration.scripts.path.src + '/**/*.js')
                 .pipe(cached('compileJs'))
                 .pipe(sourcemaps.init())
                 .pipe(babel(configuration.scripts.babel))
@@ -38,9 +54,20 @@ module.exports = {
                         gutil.colors.red("Javascript compile error:"),
                         error.message
                     );
-                })
+                });
+
+        return streamqueue(
+            {objectMode: true},
+            gulp.src(configuration.scripts.path.libs),
+            compiled
         )
-            .pipe(uglify({preserveComments: 'some'}))
+            .pipe(uglify())
+            .on('error', function (error) {
+                gutil.log(
+                    gutil.colors.red("Javascript compress error:"),
+                    error.message
+                );
+            })
             .pipe(concat('/' + configuration.scripts.targetName, {prefix: 99}))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(configuration.scripts.path.dest));
