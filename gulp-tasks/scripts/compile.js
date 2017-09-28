@@ -15,6 +15,7 @@
 'use strict';
 
 import gutil from 'gulp-util';
+import plumber from 'gulp-plumber';
 import concat from 'gulp-concat';
 import uglify from 'gulp-uglify';
 import cached from 'gulp-cached';
@@ -29,9 +30,32 @@ import buffer from 'vinyl-buffer';
 module.exports = {
     dep: ['scripts:lint'],
     fn: function (gulp, configuration) {
-        let compiled = configuration.scripts.isModule ?
-            browserify({
-                entries: configuration.scripts.path.src + '/' + configuration.scripts.path.entries,
+        let handelError = (error) => {
+                gutil.log(
+                    gutil.colors.red("Error during Javascript building:"),
+                    error.message
+                );
+            },
+            streams = [{objectMode: true}];
+
+        if(configuration.scripts.path.libs !== 'undefined' && configuration.scripts.path.libs) {
+            let libraries = gulp.src(configuration.scripts.path.libs)
+                .pipe(plumber({errorHandler: handelError}));
+            streams.push(libraries);
+        }
+
+        if(configuration.scripts.path.src !== 'undefined' && configuration.scripts.path.src) {
+            let noneModuleScripts = gulp.src(configuration.scripts.path.src + '/**/*.js')
+                .pipe(plumber({errorHandler: handelError}))
+                .pipe(cached('compileJs'))
+                .pipe(sourcemaps.init())
+                .pipe(babel(configuration.scripts.babel));
+            streams.push(noneModuleScripts);
+        }
+
+        if(configuration.scripts.path.applicationEntries !== 'undefined' && configuration.scripts.path.applicationEntries) {
+            let moduleApplication = browserify({
+                entries: configuration.scripts.path.applicationEntries,
                 debug: true
             })
                 .transform(babelify)
@@ -42,33 +66,15 @@ module.exports = {
                         err.message
                     );
                 })
-                .pipe(source('Site.js'))
-                .pipe(buffer())
-                .pipe(sourcemaps.init({loadMaps: true})) :
-            gulp.src(configuration.scripts.path.src + '/**/*.js')
-                .pipe(cached('compileJs'))
-                .pipe(sourcemaps.init())
-                .pipe(babel(configuration.scripts.babel))
-                .on("error", function (error) {
-                    gutil.log(
-                        gutil.colors.red("Javascript compile error:"),
-                        error.message
-                    );
-                });
+                .pipe(source('ModuleApplication.js'))
+                .pipe(buffer());
+            streams.push(moduleApplication);
+        }
 
-        return streamqueue(
-            {objectMode: true},
-            gulp.src(configuration.scripts.path.libs),
-            compiled
-        )
+        return streamqueue.apply(null, streams)
+            .pipe(plumber({errorHandler: handelError}))
             .pipe(uglify())
-            .on('error', function (error) {
-                gutil.log(
-                    gutil.colors.red("Javascript compress error:"),
-                    error.message
-                );
-            })
-            .pipe(concat('/' + configuration.scripts.targetName, {prefix: 99}))
+            .pipe(concat(configuration.scripts.targetName, {prefix: 99}))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(configuration.scripts.path.dest));
     }
