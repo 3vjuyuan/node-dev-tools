@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "react"
+  ],
   "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -13,6 +16,9 @@
     "jQuery": true
   },
   "rules": {
-    "semi": "error"
+    "semi": "warn",
+    "no-console": "warn",
+    "no-undef": "warn",
+    "no-unused-vars": "warn"
   }
 }
