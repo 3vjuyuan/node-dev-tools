@@ -54,7 +54,7 @@ module.exports = {
                 browsers: [configuration.styles.autoprefix.browser],
                 env: configuration.styles.autoprefix.env
             }))
-            .pipe(concat('app.min.css'))
+            .pipe(concat(configuration.styles.targetName))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(configuration.styles.path.dest));
     }
