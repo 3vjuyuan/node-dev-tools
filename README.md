@@ -13,6 +13,9 @@ minify and modernizr.
 
 The JavaScript building process accept three types code: `libaries`, `none module codes`, `ES6/React module codes`.
 The configuration is under `scripts`. It has the following settings:
+##### Linting: 
+You can set the relative path of the es-lint configuration file in `lint.configFile`, if you need a custom linting configuration.
+
 ##### The path of JavaScript files: `path` 
 * `libs` : The path of JavaScript libraries, for example jQuery `node_modules/jquery/dist/jquery.min.js`.
 * `src` : The directory path to none module JavaScript codes, like ES5 codes, e.g `src/JavaScript`.

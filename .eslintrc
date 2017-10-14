@@ -11,10 +11,8 @@
       "jsx": true
     }
   },
-  "globals": {
-    "window": true,
-    "document": true,
-    "jQuery": true
+  "env": {
+    "browser": true
   },
   "rules": {
     "semi": "warn",
