@@ -38,13 +38,13 @@ module.exports = {
             },
             streams = [{objectMode: true}];
 
-        if(configuration.scripts.path.libs !== 'undefined' && configuration.scripts.path.libs) {
+        if(configuration.scripts.path.libs !== undefined && configuration.scripts.path.libs) {
             let libraries = gulp.src(configuration.scripts.path.libs)
                 .pipe(plumber({errorHandler: handelError}));
             streams.push(libraries);
         }
 
-        if(configuration.scripts.path.src !== 'undefined' && configuration.scripts.path.src) {
+        if(configuration.scripts.path.src !== undefined && configuration.scripts.path.src) {
             let noneModuleScripts = gulp.src(configuration.scripts.path.src + '/**/*.js')
                 .pipe(plumber({errorHandler: handelError}))
                 .pipe(cached('compileJs'))
@@ -53,9 +53,9 @@ module.exports = {
             streams.push(noneModuleScripts);
         }
 
-        if (configuration.scripts.path.applicationEntries !== 'undefined' &&
+        if (configuration.scripts.path.applicationEntries !== undefined &&
             configuration.scripts.path.applicationEntries &&
-            configuration.scripts.path.applicationSrc !== 'undefined' &&
+            configuration.scripts.path.applicationSrc !== undefined &&
             configuration.scripts.path.applicationSrc
         ) {
             let moduleApplication = browserify({
