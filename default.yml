@@ -44,5 +44,6 @@ image:
             dest: src/images/sprity-scss/svg-sprity.scss
 scripts:
   path:
+    applicationSrc: .
     dest: dist/Javascript
   targetName: app.min.js

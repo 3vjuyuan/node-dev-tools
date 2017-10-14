@@ -19,7 +19,7 @@ import cached from 'gulp-cached';
 
 module.exports = {
     fn: function (gulp, configuration) {
-        return gulp.src(configuration.scripts.path.src + '/**/*.js')
+        return gulp.src([configuration.scripts.path.src + '/**/*.js', configuration.scripts.path.applicationSrc + '/**/*.js'])
             .pipe(cached('esLint'))
             .pipe(eslint(configuration.scripts.lint))
             .pipe(eslint.format())

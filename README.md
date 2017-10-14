@@ -13,11 +13,14 @@ minify and modernizr.
 
 The JavaScript building process accept three types code: `libaries`, `none module codes`, `ES6/React module codes`.
 The configuration is under `scripts`. It has the following settings:
-1. `path` : The path of JavaScript files
+##### The path of JavaScript files: `path` 
 * `libs` : The path of JavaScript libraries, for example jQuery `node_modules/jquery/dist/jquery.min.js`.
 * `src` : The directory path to none module JavaScript codes, like ES5 codes, e.g `src/JavaScript`.
-* `applicationEntries` : The entry file for module JavaScript codes, for example for React application 
+* `applicationSrc`: The base directory, in which stand the module JavaScript codes. The default value is the current
+gulp running path
+* `applicationEntries` : The entry file for module JavaScript codes, the value should be the relative path to the base
+ path of application source path, which is set in `applicationSrc`, for example for React application 
 `src/React/index.js`
 * `dest` : The destination directory, where the compiled JS file should be saved
 
-2. `targetName`: The target file name of the compiled JS file
+##### The target file name of the compiled JS file: `targetName` 

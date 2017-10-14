@@ -53,9 +53,13 @@ module.exports = {
             streams.push(noneModuleScripts);
         }
 
-        if(configuration.scripts.path.applicationEntries !== 'undefined' && configuration.scripts.path.applicationEntries) {
+        if (configuration.scripts.path.applicationEntries !== 'undefined' &&
+            configuration.scripts.path.applicationEntries &&
+            configuration.scripts.path.applicationSrc !== 'undefined' &&
+            configuration.scripts.path.applicationSrc
+        ) {
             let moduleApplication = browserify({
-                entries: configuration.scripts.path.applicationEntries,
+                entries: configuration.scripts.path.applicationSrc + '/' + configuration.scripts.path.applicationEntries,
                 debug: true
             })
                 .transform(babelify)
