@@ -12,7 +12,6 @@ styles:
       css: src/raw/css
     compiled: compiled/css
     dest: dist/css/
-    vendors: []
   autoprefix:
     browser: last 2 version
     env: ie 10

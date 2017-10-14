@@ -32,7 +32,9 @@ module.exports = {
                 configuration.onlyCSS !== true,
                 sass({
                     outputStyle: 'compressed',
-                    includePaths: configuration.styles.path.vendors
+                    includePaths:
+                        configuration.styles.path.vendors === undefined || configuration.styles.path.vendors.length == 0 ?
+                            "node_modules" : configuration.styles.path.vendors
                 }).on('error', gulputil.log)
             ))
             .pipe(gulpif(
