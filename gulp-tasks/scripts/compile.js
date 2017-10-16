@@ -62,7 +62,7 @@ module.exports = {
                 entries: configuration.scripts.path.applicationSrc + '/' + configuration.scripts.path.applicationEntries,
                 debug: true
             })
-                .transform(babelify)
+                .transform(babelify.configure(configuration.scripts.babel))
                 .bundle()
                 .on("error", function (err) {
                     gutil.log(
