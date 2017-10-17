@@ -1,22 +1,16 @@
 {
   "presets": [
-    ["env",{
-      "presets": [
-        "env",
-        {
-          "targets": {
-            "browsers": ["last 3 versions", "ie >= 10", "safari >= 7"]
-          }
-        },
-        "react"
-      ],
-      "plugins": [
-        "transform-object-rest-spread"
-      ]
-    }],
+    ["env",
+      {
+        "targets": {
+          "browsers": ["last 3 versions", "ie >= 10", "safari >= 7"]
+        }
+      }
+    ],
     "react"
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-class-properties"
   ]
 }
