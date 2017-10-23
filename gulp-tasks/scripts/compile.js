@@ -17,7 +17,6 @@
 import gutil from 'gulp-util';
 import plumber from 'gulp-plumber';
 import concat from 'gulp-concat';
-import uglify from 'gulp-uglify';
 import cached from 'gulp-cached';
 import sourcemaps from 'gulp-sourcemaps';
 import babel from 'gulp-babel';
@@ -26,6 +25,7 @@ import browserify from 'browserify';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
+import minify from 'gulp-babel-minify';
 
 module.exports = {
     dep: ['scripts:lint'],
@@ -77,7 +77,7 @@ module.exports = {
 
         return streamqueue.apply(null, streams)
             .pipe(plumber({errorHandler: handelError}))
-            .pipe(uglify())
+            .pipe(minify(configuration.scripts.minify))
             .pipe(concat(configuration.scripts.targetName, {prefix: 99}))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(configuration.scripts.path.dest));

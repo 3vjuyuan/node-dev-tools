@@ -15,7 +15,7 @@
 'use strict';
 
 import modernizr from 'gulp-modernizr';
-import uglify from 'gulp-uglify';
+import minify from 'gulp-babel-minify';
 
 module.exports = {
     dep: ['scripts:compile'],
@@ -26,7 +26,7 @@ module.exports = {
             configuration.scripts.path.src + '/**/*.js'
         ])
             .pipe(modernizr())
-            .pipe(uglify({preserveComments: 'some'}))
+            .pipe(minify(configuration.scripts.minify))
             .pipe(gulp.dest(configuration.scripts.path.dest));
     }
 };
