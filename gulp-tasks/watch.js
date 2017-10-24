@@ -15,14 +15,13 @@
 'use strict';
 
 module.exports = {
-    dep: ['build'],
     fn: function (gulp, configuration) {
-        gulp.watch(configuration.scripts.path.src + '/**/*.js', ['script:mdernizr']);
-        gulp.watch(
-            [configuration.styles.path.src.sass + '/**/*.{scss, sass}', configuration.styles.path.src.css + '/**/*.css'],
-            ['styles:compile']
-        ).on('change', function (event) {
-            configuration.onlyCSS = event.path.split('.').pop() == 'css';
+        let buildTask = configuration.tasks.build;
+        gulp.start.apply(gulp, buildTask);
+        buildTask.map((item) => {
+            let getType = item.split(":")[0];
+            gulp.watch(getType !== "styles" ? configuration[getType].path.watchSrc :
+                [configuration.styles.path.src.sass + '/**/*.{scss, sass}', configuration.styles.path.src.css + '/**/*.css'], [item]);
         });
     }
 };

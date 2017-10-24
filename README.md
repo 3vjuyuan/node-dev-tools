@@ -25,5 +25,6 @@ gulp running path
  path of application source path, which is set in `applicationSrc`, for example for React application 
 `src/React/index.js`
 * `dest` : The destination directory, where the compiled JS file should be saved
+* `watchSrc` : The path of files you want to watch
 
 ##### The target file name of the compiled JS file: `targetName` 

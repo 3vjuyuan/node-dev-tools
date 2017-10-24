@@ -12,6 +12,7 @@ styles:
       css: src/raw/css
     compiled: compiled/css
     dest: dist/css/
+    watchSrc: src/styles/**/*.{scss, sass}
   autoprefix:
     browser: last 2 version
     env: ie 10
@@ -20,6 +21,7 @@ image:
   path:
     src: src/raw/images/
     dest: dist/image/
+    watchSrc: src/raw/images/**/*.{png,jpg,gif,svg}
   sprity:
     src: src/raw/images/**/*.{png,jpg,gif}
     style: src/style/sprity.scss
@@ -46,4 +48,5 @@ scripts:
   path:
     applicationSrc: .
     dest: dist/Javascript
+    watchSrc: ./**/*.js
   targetName: app.min.js
