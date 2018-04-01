@@ -3,7 +3,7 @@ tasks:
     - gulp-tasks/
   build:
     - "image:compress"
-    - "scripts:compile"
+    - "scripts:modernizr"
     - "styles:compile"
 styles:
   path:
